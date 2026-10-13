@@ -39,6 +39,8 @@ declaration isn't practical here. -/
 set_option linter.style.openClassical false
 open scoped Classical
 
+/-- Sets of ordinals: a subset of `κ` stands for a point of the stepped-up
+ground set `2^κ`. -/
 abbrev SetOrd := Set Ordinal
 
 variable {x y z : SetOrd} {S T : Set SetOrd}
@@ -187,6 +189,7 @@ instance instIsStrictTotalOrderLexLT : IsStrictTotalOrder SetOrd LexLT where
   trichotomous := lexLT_trichotomous
   trans a b c := lexLT_trans
 
+/-- The linear order on sets of ordinals given by `LexLT`. -/
 @[instance_reducible] noncomputable
 def instLinearOrderLexLT : LinearOrder SetOrd := linearOrderOfSTO LexLT
 

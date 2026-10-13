@@ -57,6 +57,8 @@ open Cardinal
 set_option linter.style.openClassical false
 open scoped Classical
 
+/-- Sets of ordinals: a subset of `κ` stands for a point of the stepped-up
+ground set `2^κ`. -/
 abbrev SetOrd := Set Ordinal
 
 /- Only these names, not the whole `SteppingUp.Bridge` namespace: opening

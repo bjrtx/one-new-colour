@@ -39,6 +39,8 @@ through a class-valued table/`treeColour`. -/
 @[match_pattern] private def «(🍒🍁)🍒» := «🍒🍁» △ «🍒»
 
 
+/-- The palette for `r = 4`: the recycled colours `c0`, `c1` and the two new
+colours `n0`, `n1`. -/
 inductive Colour4 where
   | c0 | c1 | n0 | n1
   deriving DecidableEq
@@ -55,6 +57,9 @@ def IsValidAt4 (c : Tree → Colour4) (r : ℕ) : Prop :=
     2 ≤ (sSet4 c T).card ∨
       ((Colour4.n0 ∈ sSet4 c T ∨ Colour4.n1 ∈ sSet4 c T) ∧ hasDegenerateDel T)
 
+/-- The colouring `c_4` of `prop:r4`: `n0` on `s`, `t'_L`, `t'_R` and `n1` on
+`s'`, `t_L`, `t_R`, the six proper `5`-trees. Other trees get `c0`, which
+validity at level `4` never reads. -/
 def c4 : Tree → Colour4
   | «🤚» | «(🍁🍒)🍒» | «(🍒🍁)🍒» => .n0
   | «🖖» | «🍒(🍁🍒)» | «🍒(🍒🍁)» => .n1
@@ -72,6 +77,9 @@ theorem isValidAt4_c4 : IsValidAt4 c4 4 := by
 
 /-! #### `r = 3`: `η(3) = 1` -/
 
+/-- The colouring for `r = 3`: the new colour on the only proper `4`-tree
+`⟨⟨•,•⟩,⟨•,•⟩⟩`, and `c0` elsewhere, which validity at level `3` never
+reads. -/
 def c3 : Tree → EtaColour | «🍒🍒» => .cN | _ => .c0
 
 theorem isValidAt_c3 : IsValidAt c3 3 := by
