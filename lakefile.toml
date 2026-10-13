@@ -1,0 +1,46 @@
+name = "stepping_up_lemma"
+version = "0.1.0"
+defaultTargets = ["SteppingUpLemma"]
+lintDriver = "batteries/runLinter"
+
+[leanOptions]
+profiler = true
+linter.style.setOption = true
+linter.style.missingEnd = true
+linter.style.cdot = true
+linter.style.dollarSyntax = true
+linter.style.lambdaSyntax = true
+linter.style.longLine = true
+linter.style.show = true
+linter.style.openClassical = true
+
+[[lean_lib]]
+name = "SteppingUpLemma"
+
+# Appendix and referee-check generator. Everything in it is a `#eval`, so it
+# would run on every build were it part of the library -- hence a separate
+# target, deliberately kept out of `defaultTargets`. Run it with
+# `lake build Enumerations`; it prints the 621 constraints of the paper's
+# appendix and recomputes the counts quoted in its stabilisation section.
+[[lean_lib]]
+name = "Enumerations"
+roots = ["SteppingUpLemma.Colouring.Enumerations"]
+
+# The statement-only form of the two new results, importing nothing but
+# Mathlib and leaving both theorems as `sorry`. Kept out of `defaultTargets`
+# so that those deliberate holes never enter the library's sorry count. Build
+# it on its own with `lake build Challenge`; the two `uses 'sorry'` warnings
+# are the expected output.
+[[lean_lib]]
+name = "Challenge"
+roots = ["SteppingUpLemma.Challenge"]
+
+[[require]]
+name = "mathlib"
+scope = "leanprover-community"
+rev = "v4.33.0"
+
+# The Erdős–Rado negative stepping-up lemma is not built from here. It was
+# split off into a repository of its own -- it imports nothing but Mathlib, so
+# it had no reason to share this package -- and is registered with Palomar:
+# https://github.com/bjrtx/ordinal-step-up

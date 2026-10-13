@@ -1,0 +1,5 @@
+# Lean / Lake build output
+/.lake
+
+# SAT/LRAT certificates emitted by `decide`
+*.lrat

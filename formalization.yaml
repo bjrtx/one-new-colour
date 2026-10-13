@@ -1,0 +1,227 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/mathlib-initiative/formalization.yaml/main/schema/formalization.schema.json
+# formalization.yaml v0.4.
+#
+# WORK IN PROGRESS. Values still reading "TEMPLATE:" must be replaced before
+# submission. Everything else is filled in and believed accurate; check it
+# rather than assume it.
+#
+# Two project-level decisions are still open and are marked [OPEN] below:
+#   1. Provenance of the headline result, which fixes the `sources` block.
+#   2. Which theorems Challenge.lean advertises, which fixes `alignment`
+#      and part of `status.scope`.
+version: "v0.4"
+
+project:
+  name: "One new colour suffices for stepping up"
+  description: >-
+    A Lean 4 formalisation of negative stepping-up lemmas for Erdős–Rado
+    partition relations. A negative relation n -/-> (s_i)^r_{i<k} asserts a
+    colouring of the r-subsets of an n-element ground set with no large
+    monochromatic set; a stepping-up lemma propagates such a failure from
+    uniformity r to uniformity r + 1 over a ground set of size 2^n, at the
+    cost of larger goals and some number eta(r) of additional colours.
+
+    Jartoux, Keller, Smorodinsky and Yuditsky (SIAM J. Discrete Math. 36
+    (2022), Theorem 1.2) achieve minimally increasing goals at a cost of
+    eta(3) = 1, eta(4) = 3 and, for r >= 5, eta(r) = 2 for odd r and 3 for
+    even r. This development proves that one additional
+    colour suffices for every r >= 5, and that two rather than three suffice
+    at r = 4, tightening the associated multicolour Ramsey lower bounds. The
+    combinatorial core is reduced to a finite check over a table of 69 classes
+    against 621 constraints, discharged by the Lean kernel rather than by
+    compiled evaluation, so the development uses no reflection axiom.
+
+    The results are proved in an infinitary setting in which the ground-set
+    size and each colour's target size are arbitrary cardinals and the colour
+    count is an arbitrary ordinal, and the finitary statements are obtained
+    from these by transport.
+  authors:
+    - "Bruno Jartoux"
+  license: "Apache-2.0"
+  responsible_maintainers:
+    - "Bruno Jartoux"
+
+# `repository` is intentionally omitted: this repository is itself the
+# substantive proof development, not a thin Comparator wrapper.
+
+classification:
+  # math.CO for the Ramsey-theoretic content, math.LO for the ordinal and
+  # cardinal partition calculus in Infinitary.lean.
+  arxiv: ["math.CO", "math.LO"]
+  # 05D10 Ramsey theory; 03E02 Partition relations;
+  # 68V20 Formalization of mathematics in connection with theorem provers.
+  msc2020: ["05D10", "03E02", "68V20"]
+
+sources:
+  # [OPEN] Result origin. Exactly one of these two shapes is correct, and the
+  # choice depends on whether the companion paper is posted before submission:
+  #
+  #   (a) Companion paper posted first: replace the entry below with the
+  #       paper, relationship: formalizes, and its arXiv identifier. JKSY and
+  #       Conlon–Fox–Sudakov then stay exactly as they are.
+  #
+  #   (b) Formalisation is the first public presentation: give the entry below
+  #       type: original-proof and relationship: other. In that case every
+  #       other source MUST have relationship background or other, which the
+  #       two below already do.
+  #
+  # Note also that if Challenge.lean advertises stepping_up_eta_one_r3
+  # (eta(3) = 1), that theorem is JKSY's own rather than new here, and the
+  # JKSY entry's relationship should become independently-proves.
+  - title: "TEMPLATE: One New Colour Suffices for Stepping Up -- see [OPEN] above"
+    authors:
+      - "Bruno Jartoux"
+    id: "TEMPLATE: arXiv identifier once posted, or remove"
+    type: "TEMPLATE: article, or original-proof under option (b)"
+    location: "TEMPLATE: theorem number within the paper once posted, or remove"
+    relationship: "TEMPLATE: formalizes under option (a), other under option (b)"
+    license: "TEMPLATE: source license or unknown"
+    author_endorsement: "participated"
+
+  - title: "On Multicolour Ramsey Numbers and Subset-Colouring of Hypergraphs"
+    authors:
+      - "Bruno Jartoux"
+      - "Chaya Keller"
+      - "Shakhar Smorodinsky"
+      - "Yelena Yuditsky"
+    id: "doi:10.1137/21M1462003"
+    type: "article"
+    location: "Theorem 1.2"
+    relationship: "background"
+    note: >-
+      The baseline improved on. Its Theorem 1.2 is the multicolour stepping-up
+      lemma whose additional-colour counts this development reduces, and its
+      setting and target sizes are adopted unchanged. Cited in its published
+      form: the arXiv version (2103.12627v1) states the parities of eta(r)
+      the other way round, though its construction is the same.
+    license: "unknown"
+    author_endorsement: "participated"
+
+  - title: "An improved bound for the stepping-up lemma"
+    authors:
+      - "David Conlon"
+      - "Jacob Fox"
+      - "Benny Sudakov"
+    id: "arXiv:0907.0283"
+    type: "article"
+    location: "Theorem 4"
+    relationship: "background"
+    note: >-
+      The zero-additional-colour classical version, which trades larger goals
+      for no extra colours. Background only: nothing from it is formalised
+      here, and the eta(r) results are proved independently of it.
+    license: "unknown"
+    author_endorsement: "not-contacted"
+
+related_formalizations: []
+
+status:
+  scope: >-
+    TEMPLATE: to be finalised once [OPEN] item 2 is settled. Draft follows.
+
+    Formalised in full, with no sorry and no axioms beyond propext,
+    Classical.choice and Quot.sound: the infinitary stepping-up lemmas
+    stepping_up_eta_one (eta(r) = 1 for r >= 5), stepping_up_eta_two_r4
+    (eta(4) = 2) and stepping_up_eta_one_r3 (eta(3) = 1), each an instance of
+    a single stepping_up_of_colouring; the finitary counterparts in
+    SteppingUpLemma/Arrow.lean, obtained from these by transport rather than
+    by a separate finitary construction; the validity of the colour tables,
+    reduced by the Lean kernel rather than by compiled evaluation; and the
+    tree combinatorics they rest on.
+
+    Not formalised: the multicolour Ramsey lower bounds that these lemmas
+    imply as an application.
+  # No sorry anywhere in the development. Challenge.lean's deliberate holes
+  # are excluded from this count by definition.
+  sorry_count: 0
+  sorry_in_definitions: 0
+  # No custom axioms; only the three permitted ones are used. The schema asks
+  # for all axioms, standard ones included.
+  axioms: ["propext", "Classical.choice", "Quot.sound"]
+
+automation:
+  methods:
+    - method: "agent"
+      # TODO confirm: this records the model used in the most recent sessions.
+      # Earlier sessions may have used other models; extend this list.
+      models: ["Claude Opus 5"]
+      framework: "Claude Code"
+      tool_setup: >-
+        TEMPLATE: confirm and expand. Agent-assisted development in Claude
+        Code against Lean 4 and Mathlib, with lake build, lake lint and
+        #print axioms as the verification loop. The mathematical argument was
+        written first as a formalisation-oriented LaTeX account and then
+        transcribed into Lean.
+      cost:
+        wall_time: "TEMPLATE: approximate elapsed effort across all sessions"
+        spend_usd: "subscription-based"
+        hardware: "local machine"
+      prompting_notes: "TEMPLATE: representative prompting notes, or n/a"
+  spend_usd: "TEMPLATE: total amount, subscription-based, or not tracked"
+  # TODO: needs human input. This is the narrative production account and must
+  # be written by the human author, not drafted for them.
+  notes: "TODO: needs human input."
+
+fidelity:
+  divergences: >-
+    Colourings are total functions carrying their colour bound in the type:
+    Finset N -> Fin k in the finitary statements, and Finset V -> Set.Iio k
+    in the infinitary ones, where Set.Iio k is the type of ordinals below k.
+    Nothing is claimed about their values on sets that are not r-subsets of
+    the ground set, so totality is not a strengthening. This is equivalent to
+    the sources' formulation, which colours only the r-subsets.
+
+    The infinitary statements are the primary ones: the finitary
+    stepping_up_* theorems are transported from their Infinitary counterparts
+    rather than proved from a separate finitary construction.
+
+    TEMPLATE: record any further divergence from the companion paper here.
+
+review:
+  status: "TEMPLATE: honest review status, for example self-assessed"
+  reviewers:
+    - "TEMPLATE: reviewer name, or none"
+  notes: >-
+    TEMPLATE: describe the statement audits and mathematical review actually
+    performed, including any review of the companion paper.
+
+alignment:
+  namespace: "SteppingUp"
+  # [OPEN] Trim this list to whatever Challenge.lean actually advertises.
+  statements:
+    - source: "eta(r) = 1 for r >= 5, finitary form"
+      lean: "SteppingUp.stepping_up_eta_one"
+      module: "SteppingUpLemma.Arrow"
+      status: "proved"
+      note: >-
+        New here; improves JKSY's eta(r) in {2, 3}. Transported from the
+        infinitary form rather than proved by a separate construction.
+    - source: "eta(4) = 2, finitary form"
+      lean: "SteppingUp.stepping_up_eta_two_r4"
+      module: "SteppingUpLemma.Arrow"
+      status: "proved"
+      note: "New here; improves JKSY's eta(4) = 3. Transported from the infinitary form."
+    - source: "eta(3) = 1, finitary form"
+      lean: "SteppingUp.stepping_up_eta_one_r3"
+      module: "SteppingUpLemma.Arrow"
+      status: "proved"
+      note: >-
+        JKSY's own result, reproved here by the same tree-table machinery.
+        Not new, and status.scope must say so if it is advertised.
+    - source: "eta(r) = 1 for r >= 5, infinitary form"
+      lean: "SteppingUp.Infinitary.stepping_up_eta_one"
+      module: "SteppingUpLemma.Infinitary"
+      status: "proved"
+      note: >-
+        Arbitrary cardinal ground set and target sizes, ordinal colour count.
+    - source: "eta(4) = 2, infinitary form"
+      lean: "SteppingUp.Infinitary.stepping_up_eta_two_r4"
+      module: "SteppingUpLemma.Infinitary"
+      status: "proved"
+    - source: "eta(3) = 1, infinitary form"
+      lean: "SteppingUp.Infinitary.stepping_up_eta_one_r3"
+      module: "SteppingUpLemma.Infinitary"
+      status: "proved"
+
+acknowledgements: >-
+  TEMPLATE: confirm and extend. Lean 4 and Mathlib, and their contributors.

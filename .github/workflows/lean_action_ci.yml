@@ -1,0 +1,21 @@
+name: Lean Action CI
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v5
+      - uses: leanprover/lean-action@v1
+
+      # `Enumerations` is not in `defaultTargets`, so the step above never
+      # touches it. It generates the paper's appendix and recomputes the
+      # counts quoted in its stabilisation section, so it needs to keep
+      # working even though no proof depends on it.
+      - name: Appendix generator still runs
+        run: lake build Enumerations
